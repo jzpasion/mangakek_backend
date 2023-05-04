@@ -10,8 +10,10 @@ export class MangaRoute {
     this.app = Router({ mergeParams: true });
   }
   public expose() {
-    this.app.use(ListValidationPipeline);
+    this.app.use(ListValidationPipeline.pipeline);
     this.app.get("/get-manga", this.mangaController.mangaList);
+    this.app.get("/get-cover-manga/:id", this.mangaController.getMangaCover);
+    this.app.get("/manga", this.mangaController.getMangaListWithCover);
     return this.app;
   }
 }

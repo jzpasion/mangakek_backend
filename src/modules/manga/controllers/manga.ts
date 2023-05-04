@@ -7,7 +7,7 @@ export class MangaController {
 
   public mangaList = async (req: Request, res: Response) => {
     try {
-      const mangaList = await this.mangaInteractor.getMangaList();
+      const mangaList = await this.mangaInteractor.getMangaList(req.query);
 
       res.status(HttpStatus.OK).json({
         success: true,
@@ -15,6 +15,41 @@ export class MangaController {
       });
     } catch (error) {
       console.log("error @ controllerMangaList", error);
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ success: false, message: error });
+    }
+  };
+
+  public getMangaCover = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      const coverImg = await this.mangaInteractor.getCoverImg(id);
+
+      res.status(HttpStatus.OK).json({
+        success: true,
+        data: coverImg,
+      });
+    } catch (error) {
+      console.log("error @ controllerCoverImg", error);
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ success: false, message: error });
+    }
+  };
+
+  public getMangaListWithCover = async (req: Request, res: Response) => {
+    try {
+      const mangaList = await this.mangaInteractor.getMangaListWithCover(
+        req.query
+      );
+      res.status(HttpStatus.OK).json({
+        success: true,
+        data: mangaList,
+      });
+    } catch (error) {
+      console.log("error @ controller - getMangaListWithCover", error);
       res
         .status(HttpStatus.BAD_REQUEST)
         .json({ success: false, message: error });
