@@ -1,13 +1,5 @@
 import { MangaDexServiceAPI, IOptions } from "../../../api/index";
 
-interface IMangaDetails {
-  title: string;
-  description: string;
-  altTitles: any[];
-  tags: any[];
-  uri: string;
-}
-
 export class MangaInteractor {
   public getMangaList = async (options?: IOptions) => {
     try {
@@ -22,6 +14,18 @@ export class MangaInteractor {
     try {
       const cover = await new MangaDexServiceAPI().mangaCover(id);
       return cover;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  public getMangaChapter = async (id: string, options?: IOptions) => {
+    try {
+      const chapterList = await new MangaDexServiceAPI().mangaChapterList(
+        id,
+        options
+      );
+      return chapterList;
     } catch (error) {
       throw error;
     }

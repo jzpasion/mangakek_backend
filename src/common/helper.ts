@@ -20,13 +20,16 @@ export const generateQueryString = (
   fieldName?: string
 ) => {
   const x = 0;
+
   for (const query in queryData) {
+    console.log("query string value", queryString);
     const andSign = queryString ? "&" : "?";
     // check if fieldName is not empty, if not, add query inside of the '[]' eg: filterBy[value] = testValue
     const queryField = fieldName ? `${fieldName}[${query}]` : query;
     try {
       // console.log('queryData[query]: ', queryData[query])
       // check if the value is object
+
       if (typeof queryData[query] === "object") {
         // recursion call
         queryString = generateQueryString(queryString, queryData[query], query);

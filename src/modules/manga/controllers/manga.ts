@@ -39,6 +39,27 @@ export class MangaController {
     }
   };
 
+  public getMangaChapter = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      console.log("from controller ", req.query);
+      const mangaList = await this.mangaInteractor.getMangaChapter(
+        id,
+        req.query
+      );
+
+      res.status(HttpStatus.OK).json({
+        success: true,
+        data: mangaList,
+      });
+    } catch (error) {
+      console.log("error @ controllerChapterList", error);
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ success: false, message: error });
+    }
+  };
+
   public getMangaListWithCover = async (req: Request, res: Response) => {
     try {
       const mangaList = await this.mangaInteractor.getMangaListWithCover(

@@ -14,6 +14,7 @@ export class MangaRoute {
     this.app.get("/get-manga", this.mangaController.mangaList);
     this.app.get("/get-cover-manga/:id", this.mangaController.getMangaCover);
     this.app.get("/manga", this.mangaController.getMangaListWithCover);
+    this.app.get("/:id/chapterList", this.mangaController.getMangaChapter);
     return this.app;
   }
 }

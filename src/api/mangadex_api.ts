@@ -4,6 +4,9 @@ import http from "axios";
 export interface IOptions {
   limit?: number;
   offset?: number;
+  excludedTags?: any[];
+  translatedLanguage?: any[];
+  order?: any;
 }
 export class MangaDexServiceAPI {
   private readonly serviceBaseUrl = `https://api.mangadex.org`;
@@ -16,7 +19,7 @@ export class MangaDexServiceAPI {
       );
       return data.result == "ok" ? data.data : null;
     } catch (err: any) {
-      console.log("error @ mangaList", err.response.data.errors);
+      console.log("error @ API Service mangaList", err.response.data.errors);
       throw new Error(err.response.data.errors[0]?.message);
     }
   }
@@ -28,7 +31,25 @@ export class MangaDexServiceAPI {
       );
       return data.result == "ok" ? data.data : null;
     } catch (err: any) {
-      console.log("error @ coverGet", err.response.data.errors);
+      console.log("error @ API Service coverGet", err.response.data.errors);
+      throw new Error(err.response.data.errors[0]?.message);
+    }
+  }
+
+  public async mangaChapterList(id: string, options?: IOptions) {
+    try {
+      console.log("@@@@@@@@@@@@", options);
+
+      const queryString = generateQueryString("", options || {});
+      const { data } = await http.get<{ result: string; data: any }>(
+        `${this.serviceBaseUrl}/manga/${id}/feed${queryString}`
+      );
+      return data.result == "ok" ? data.data : null;
+    } catch (err: any) {
+      console.log(
+        "error @ API Service mangaChapterGet",
+        err.response.data.errors
+      );
       throw new Error(err.response.data.errors[0]?.message);
     }
   }

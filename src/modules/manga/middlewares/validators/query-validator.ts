@@ -18,7 +18,18 @@ export const ListValidationPipeline = {
     query("excludedTags")
       .optional()
       .isArray()
+      .trim()
       .withMessage("must be a array of string."),
+    query("translatedLanguage")
+      .optional()
+      .isArray()
+      .trim()
+      .withMessage("must be a array of string."),
+    query("order")
+      .optional()
+      .isObject()
+      .trim()
+      .withMessage("must be a object of string."),
   ],
   validator: formValidatorMiddleware,
 };
